@@ -1,46 +1,68 @@
-// Contador animado
+function enviarPergunta() {
 
-const contador = document.getElementById("contador");
+    const input =
+        document.getElementById("userInput");
 
-let numero = 0;
-let objetivo = 12500;
+    const texto =
+        input.value.toLowerCase();
 
-const animar = setInterval(() => {
+    if (!texto) return;
 
-    numero += 100;
+    const chat =
+        document.getElementById("chat-messages");
 
-    contador.innerText =
-        numero.toLocaleString("pt-BR");
+    chat.innerHTML += `
+        <div class="user">${input.value}</div>
+    `;
 
-    if(numero >= objetivo){
+    let resposta = "";
 
-        contador.innerText =
-            objetivo.toLocaleString("pt-BR");
+    if (
+        texto.includes("soja")
+    ) {
 
-        clearInterval(animar);
+        resposta =
+        "🌱 A soja é uma das principais commodities agrícolas do Brasil.";
+
+    } else if (
+        texto.includes("milho")
+    ) {
+
+        resposta =
+        "🌽 O milho é utilizado para alimentação humana, animal e produção de etanol.";
+
+    } else if (
+        texto.includes("ia") ||
+        texto.includes("inteligência artificial")
+    ) {
+
+        resposta =
+        "🤖 A IA ajuda na previsão climática, produtividade e detecção de pragas.";
+
+    } else if (
+        texto.includes("sustentabilidade")
+    ) {
+
+        resposta =
+        "🌎 A sustentabilidade reduz desperdícios e aumenta a eficiência no campo.";
+
+    } else {
+
+        resposta =
+        "🚜 Obrigado pela pergunta! Nossa plataforma pode auxiliar produtores com tecnologia, monitoramento e gestão agrícola.";
+
     }
 
-}, 20);
+    setTimeout(() => {
 
+        chat.innerHTML += `
+            <div class="bot">${resposta}</div>
+        `;
 
-// Scroll suave
+        chat.scrollTop =
+            chat.scrollHeight;
 
-document
-.querySelectorAll('a[href^="#"]')
-.forEach(link => {
+    }, 500);
 
-    link.addEventListener("click", e => {
-
-        e.preventDefault();
-
-        document
-        .querySelector(
-            link.getAttribute("href")
-        )
-        .scrollIntoView({
-            behavior:"smooth"
-        });
-
-    });
-
-});
+    input.value = "";
+}
